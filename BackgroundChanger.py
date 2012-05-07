@@ -56,15 +56,14 @@ if(len(sys.argv) > 1):
 	if(sys.argv[1] == "c"):
 		currentTemp[0] = ((int(currentTemp[0])  -  32) * 5/9)
 		currentTemp[0] = str(currentTemp[0])
-		print "Cel"
 
 for i in range(0,len(typesOfWeather)): #checks what kind of weather it is
 	if typesOfWeather[i] in currentWeather: #picks what background to use and add weather status and tempature text to it
 		if(len(sys.argv) > 1):
 			if(sys.argv[1] == 'c'):
 				os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output[0] + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,70 \'' +currentWeather + ' ' + currentTemp[0] + cel + '\'\" ' + backgrounds + 'now.jpg')
-				print "CEL"
 			else:
 				os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output[0] + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,70 \'' +currentWeather + ' ' + currentTemp[0] + far + '\'\" ' + backgrounds + 'now.jpg')	
-				print "FAR"
 		os.system('gsettings set org.gnome.desktop.background picture-uri "file:///' + backgrounds + 'now.jpg"') #sets background only works in gnome
+
+os.system('rm location.html weather.html') #deletes the html files
