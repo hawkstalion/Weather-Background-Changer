@@ -69,18 +69,22 @@ def convertToCel(currentTemp):
 	currentTemp = str(currentTemp)
 	return currentTemp
 
-def setBackground(currentTemp,currentWeather,output):
+def setBackground(currentTemp,currentWeather,output):	
+	outputs = output.split('x')
+	outputs[0] = str(int(outputs[0]) - 200)
+	
 	for i in range(0,len(typesOfWeather)): #checks what kind of weather it is
 		if typesOfWeather[i] in currentWeather: #picks what background to use and add weather status and tempature text to it
 			if(len(sys.argv) > 1):
 				if(sys.argv[1] == 'c'):
-					os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,70 \'' +currentWeather + '\'\" ' + backgrounds + 'now.jpg')
-					os.system('convert ' + backgrounds + 'now.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,120 \'' +currentTemp + cel + '\'\" ' + backgrounds + 'now.jpg')
+					os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text ' + outputs[0] + ',70 \'' +currentWeather + '\'\" ' + backgrounds + 'now.jpg')
+					os.system('convert ' + backgrounds + 'now.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text ' + outputs[0] + ',120 \'' +currentTemp + cel + '\'\" ' + backgrounds + 'now.jpg')
 					break
 			else:#convert is a linux tool to add text to images and resize them to match the screen size
-				os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,70 \'' +currentWeather + '\'\" ' + backgrounds + 'now.jpg')	
-				os.system('convert ' + backgrounds + 'now.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text 25,120 \'' +currentTemp + far + '\'\" ' + backgrounds + 'now.jpg')
+				os.system('convert ' + backgrounds + typesOfWeather[i] + '.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text ' + outputs[0] + ',70 \'' +currentWeather + '\'\" ' + backgrounds + 'now.jpg')	
+				os.system('convert ' + backgrounds + 'now.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text ' + outputs[0] + ',120 \'' +currentTemp + far + '\'\" ' + backgrounds + 'now.jpg')
 				break
+				
 	os.system('gsettings set org.gnome.desktop.background picture-uri "file:///' + backgrounds + 'now.jpg"') #sets background only works in gnome		
 
 def main():
