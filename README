@@ -1,10 +1,11 @@
 prerequisites:
-Need wget installed 
 Need convert installed
 
 Add BackgroundChanger.py to cron, with settings on how often you want
 it to update
-e.g 30 0 * * * ~/BackgroundChanger.py c
+e.g
+crontab -e
+30 0 * * * ~/BackgroundChanger.py c
 will update every 30 minutes
 
 Takes in one optional parameter c to decide wheter to use celsius, 
@@ -13,7 +14,7 @@ defualt is farenhiet
 Background images are downloaded and converted to size of
 users screen automatically 
 
-Only works on gnome for now
+Only works on gnome 3 for now
 
 Might need to include a few more TypesOfWeather and images to match all
 kinds of options available on the site. But concept works
