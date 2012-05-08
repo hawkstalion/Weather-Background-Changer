@@ -71,7 +71,7 @@ def convertToCel(currentTemp):
 
 def setBackground(currentTemp,currentWeather,output):	
 	outputs = output.split('x')
-	outputs[0] = str(int(outputs[0]) - 200)
+	outputs[0] = str(int(outputs[0]) - (len(currentWeather)*33.33))#To make sure the string will fit on the right side
 	
 	for i in range(0,len(typesOfWeather)): #checks what kind of weather it is
 		if typesOfWeather[i] in currentWeather: #picks what background to use and add weather status and tempature text to it
