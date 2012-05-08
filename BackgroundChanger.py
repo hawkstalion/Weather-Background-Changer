@@ -70,7 +70,7 @@ def convertToCel(currentTemp):
 	currentTemp = str(currentTemp)
 	return currentTemp
 
-def setBackground(currentTemp,currentWeather,output):	
+def setBackground(currentTemp,currentWeather,output,deskEnv):	
 	outputs = output.split('x')
 	outputs[0] = str(int(outputs[0]) - (len(currentWeather)*33.33))#To make sure the string will fit on the right side
 	
@@ -86,8 +86,25 @@ def setBackground(currentTemp,currentWeather,output):
 				os.system('convert ' + backgrounds + 'now.jpg -resize ' + output + '! -font Bookman-DemiItalic -pointsize 48 -stroke White -draw \"text ' + outputs[0] + ',120 \'' +currentTemp + far + '\'\" ' + backgrounds + 'now.jpg')
 				break
 				
-	os.system('gsettings set org.gnome.desktop.background picture-uri "file:///' + backgrounds + 'now.jpg"') #sets background only works in gnome		
+	if(deskEnv == '3'):			
+		os.system('gsettings set org.gnome.desktop.background picture-uri "file:///' + backgrounds + 'now.jpg"') #sets background only works in gnome		
+	elif(deskEnv == '2'):
+		os.system('gconftool-2 -t string -s /desktop/gnome/background/picture_filename ' + backgrounds + 'now.jpg')
+	elif(deskEnv == 'xfce'):
+		os.system('xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s ' + backgrounds + 'now.jpg')
 
+def getDeskEnv():
+	
+	deskEnv = os.environ.get('DESKTOP_SESSION')
+	if(deskEnv == 'xfce'):
+		return deskEnv
+	deskEnv = subprocess.Popen('gnome-session --version',shell=True, stdout=subprocess.PIPE).communicate()[0]
+	if(deskEnv == ''):
+		deskEnv = subprocess.Popen('gnome-about --gnome-version',shell=True, stdout=subprocess.PIPE).communicate()[0]
+	
+	deskEnv = deskEnv.split(' ')
+	return deskEnv[1][0]
+	
 def main():
 
 	if not os.path.exists(backgrounds): #check if directory for backgrounds exist
@@ -102,7 +119,8 @@ def main():
 		if(sys.argv[1] == "c"):
 			currentTemp = convertToCel(currentTemp)
 	output = getScreenSize()
-	setBackground(currentTemp,currentWeather,output)
+	deskEnv = getDeskEnv()
+	setBackground(currentTemp,currentWeather,output,deskEnv)
 	
 if __name__ == "__main__":
     main()
