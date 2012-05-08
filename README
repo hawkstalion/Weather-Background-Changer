@@ -5,7 +5,7 @@ Add BackgroundChanger.py to cron, with settings on how often you want
 it to update
 e.g
 crontab -e
-30 0 * * * ~/BackgroundChanger.py c
+*/30 * * * * /home/Username/BackgroundChanger.py c
 will update every 30 minutes
 
 Takes in one optional parameter c to decide whether to use celsius, 

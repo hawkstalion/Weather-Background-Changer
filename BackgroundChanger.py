@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import urllib
 import os
 import subprocess
